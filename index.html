@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SPA uisng Ember.js • Users, Posts and Comments</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script type="text/x-handlebars" data-template-name="application">
+      <section id="app">        
+        <section id="main">
+          <!-- Ouput template content here, based on current route -->
+          {{outlet}}
+        </section>      
+      </section>
+    </script>
+
+    <!-- Enber template to list users, default application route and view -->
+    <script type="text/x-handlebars" data-template-name="users">
+      <header id="header">
+        <h1>Users</h1>      
+      </header>
+      <table class="table" id="user-list">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each user in model}}
+            <tr>
+              <th>{{user.id}}</th>
+              <td>{{user.name}}</td>
+              <td>{{user.username}}</td>
+              <td>{{user.email}}</td>
+              <td>{{#linkTo "posts" user.id}}<img title="View Posts" src="resources/post.png" alt="" style="width:25px; height:auto;">{{/linkTo}}<td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>     
+    </script> 
+
+    <!-- Enber template to list posts for a user, displayed on click of the view posts image-->
+    <script type="text/x-handlebars" data-template-name="posts">
+      <header id="header">
+        <h1>Posts</h1>      
+      </header>
+      <table class="table" id="post-list">
+        <thead>
+          <tr>
+            <th>#</th>          
+            <th>Title</th>
+            <th>Message</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each post in model}}
+            <tr>
+              <th>{{post.id}}</th>
+              <td>{{post.title}}</td>
+              <td>{{post.message}}</td>           
+              <td>{{#linkTo "comments" post.userId post.id}}<img title="View Comments" src="resources/comments.png" alt="" style="width:25px; height:auto;">{{/linkTo}}<td>
+            </tr>
+            {{/each}}
+        </tbody>
+      </table>
+       <footer id="footer">
+        <span id="back-to-users">
+          {{#linkTo "users"}}<img title="Back to Users" src="resources/back.png" alt="" style="width:25px; height:auto;">{{/linkTo}}
+        </span>        
+      </footer>
+    </script>  
+
+    <!-- Enber template to list comments for a post, displayed on click of the view comments image-->
+    <script type="text/x-handlebars" data-template-name="comments">
+      <header id="header">
+        <h1>Comments</h1>      
+      </header>
+      <table class="table" id="comment-list">
+        <thead>
+          <tr>
+            <th>#</th> 
+            <th>Message</th>            
+          </tr>
+        </thead>
+        <tbody>
+          {{#each comment in model}}
+            <tr>
+              <th>{{comment.id}}</th>
+              <td>{{post.message}}</td>                         
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <footer id="footer">
+        <!-- TODO: need to find a better way to do this -->
+        <span id="back-to-users" onclick="window.history.back();" style="cursor: pointer;">
+          <img title="Back to Users" src="resources/back.png" alt="" style="width:25px; height:auto;">
+        </span>        
+      </footer>
+    </script>            
+
+    <!-- Application dependancies -->
+    <script src="js/libs/jquery-1.10.2.js"></script>
+    <script src="js/libs/handlebars-1.1.2.js"></script>
+    <script src="js/libs/ember-1.5.1.js"></script>
+    <script src="js/libs/ember-data.js"></script>
+    <script src="js/application.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/models/user.js"></script>   
+    <script src="js/models/post.js"></script>
+    <script src="js/models/comment.js"></script>
+  </body>
+</html>
