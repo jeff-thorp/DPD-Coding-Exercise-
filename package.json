@@ -1,0 +1,8 @@
+{
+  "author": "PCS Ltd",
+  "dependencies": {
+    "json-server": "^0.8.14"
+  },
+  "version": "1.0.0",
+  "license": ""
+}
